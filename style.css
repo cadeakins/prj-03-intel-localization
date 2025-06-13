@@ -17,7 +17,7 @@ body {
 }
 
 header {
-  background: #0068b5; /* Intel blue */
+  background: #0068b5 !important; /* Intel blue */
   color: #fff;
   padding: 2rem 1rem 1rem 1rem;
   text-align: center;
@@ -54,114 +54,113 @@ header hr {
 }
 
 /* 2. Timeline Section Styles */
-section {
+.timeline-row {
   display: flex;
-  flex-direction: column; /* Stack cards vertically on mobile */
-  gap: 1.5rem;
-  padding: 1rem;
-  max-width: 100vw;
+  flex-wrap: nowrap;
   overflow-x: auto;
+  gap: 2rem;
+  padding: 2rem 0;
 }
 
 /* 3. Timeline Card Styles */
-section > div {
+.timeline-card {
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-  padding: 1rem;
   min-width: 320px;
   max-width: 320px;
-  margin: 0 auto;
-  position: relative;
+  flex: 0 0 25%; /* 4 cards per row on large screens */
+  margin: 0;
+  border: 2px solid #0068b5;
   transition: box-shadow 0.2s;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: hidden; /* Ensures overlay stays inside card */
 }
 
-/* Card content wrapper for year, title, and image */
-.card-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-
-/* Overlay for description */
-.card-overlay {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(27, 97, 158, 0.90); /* Deep Intel blue, mostly opaque */
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s;
-  padding: 1rem;
-  text-align: center;
-  border-radius: 12px;
-  z-index: 2;
-}
-
-.card-overlay p {
-  color: #fff !important;
-}
-
-.card-overlay {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(27, 97, 158, 0.90); /* Deep Intel blue, mostly opaque */
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s;
-  padding: 1rem;
-  text-align: center;
-  border-radius: 12px;
-  z-index: 2;
-}
-
-.card-overlay p {
-  color: #fff !important;
-}
-
-section > div:hover .card-overlay,
-section > div:focus-within .card-overlay {
-  opacity: 1;
-}
-
-section h2 {
+.timeline-card .card-title {
   color: #0068b5;
   font-size: 1.3rem;
-  margin: 0.2rem 0 0.1rem 0;
   font-weight: 700;
 }
 
-section h3 {
+.timeline-card .h6 {
   color: #003c71;
   font-size: 1rem;
-  margin: 0.1rem 0 0.5rem 0;
   font-weight: 400;
 }
 
-section img {
-  width: 200px;         /* Set a fixed width for all images */
-  height: 120px;        /* Set a fixed height for all images */
-  max-width: 200px;     /* Prevent images from getting larger than this */
-  min-width: 200px;     /* Prevent images from getting smaller than this */
-  min-height: 120px;    /* Prevent images from getting smaller than this */
-  max-height: 120px;    /* Prevent images from getting larger than this */
-  border-radius: 8px;   /* Rounded corners for style */
-  margin: 0.5rem 0;
-  object-fit: cover;    /* Crop images to fill the box, keeping them neat */
-  display: block;       /* Remove extra space below images */
+.timeline-card img {
+  width: 200px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-card .btn-link {
+  color: #0068b5;
+  font-weight: bold;
+}
+
+.timeline-card .btn-link:focus,
+.timeline-card .btn-link:hover {
+  color: #003c71;
+  text-decoration: underline;
+}
+
+/* Collapsed card details use Intel blue */
+.timeline-card .collapse .card-body {
+  background: #0068b5 !important;
+  color: #fff !important;
+  border-radius: 8px;
+}
+
+/* Make card-body fill the card and allow overlay to cover it */
+.timeline-card .card-body {
+  position: relative;   /* Needed for overlay to position absolutely inside */
+  height: 100%;         /* Fill the card vertically */
+  width: 100%;          /* Fill the card horizontally */
+  padding: 1rem;        /* Keep some padding for content */
+  box-sizing: border-box;
+}
+
+/* Overlay for card description */
+.card-overlay {
+  display: none; /* Hide by default */
+  position: absolute; /* Position over the card body */
+  top: 0;
+  left: 0;
+  width: 100%;           /* Changed from 125% to 100% */
+  height: 100%;          /* Changed from 125% to 100% */
+  background: rgba(0,104,181,0.95); /* Intel blue with some transparency */
+  color: #fff;
+  padding: 1.5rem;
+  font-size: 1rem;
+  font-weight: 400;
+  z-index: 2;
+  box-sizing: border-box;
+  text-align: center;    /* Center text horizontally */
+  display: flex;
+  align-items: center;   /* Center text vertically */
+  justify-content: center; /* Center text horizontally */
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none; /* Prevents accidental clicks */
+  overflow: auto;
+  word-break: break-word;
+}
+
+/* Show overlay on hover or focus */
+.timeline-card:hover .card-overlay,
+.timeline-card:focus-within .card-overlay,
+.timeline-card:focus .card-overlay {
+  opacity: 1;
+  display: flex;
+  pointer-events: auto;
+}
+
+/* Make sure the card is positioned relative for overlay */
+.timeline-card {
+  position: relative;
+  overflow: hidden;
 }
 
 /* 4. Hide card description by default, show on hover */
@@ -190,7 +189,7 @@ section > div p {
   }
   section > div {
     min-width: 250px;
-    max-width: 300px;
+    max-width: 100%;
     margin: 0;
   }
 }
@@ -220,4 +219,25 @@ section > div p {
 /* 8. Accessibility: Show description on focus for keyboard users */
 section > div:focus-within p {
   display: block;
+}
+
+/* Responsive: 1 card per view on small screens, 4 on large */
+@media (max-width: 1199.98px) {
+  .timeline-card {
+    flex: 0 0 100%; /* 1 card per row on small screens */
+    min-width: 320px;
+    max-width: 320px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .timeline-row {
+    gap: 2rem;
+    padding: 2rem 0;
+  }
+  .timeline-card {
+    flex: 0 0 25%; /* 4 cards per row */
+    min-width: 320px;
+    max-width: 320px;
+  }
 }
