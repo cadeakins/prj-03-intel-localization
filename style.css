@@ -221,6 +221,8 @@ section > div:focus-within p {
   display: block;
 }
 
+.desktop-only {display: inline;}
+.mobile-only {display: none;} /*Desktop instructions shown by default
 /* Responsive: 1 card per view on small screens, 4 on large */
 @media (max-width: 1199.98px) {
   .timeline-card {
@@ -243,4 +245,9 @@ section > div:focus-within p {
     min-width: 320px;
     max-width: 320px;
   }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .desktop-only {display: none;}  /*Change instructions for mobile */
+  .mobile-only {display: inline;} 
 }
